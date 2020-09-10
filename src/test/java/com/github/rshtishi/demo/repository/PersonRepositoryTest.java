@@ -93,4 +93,19 @@ class PersonRepositoryTest {
 		assertEquals(name, persons.get(0).getLastname());
 	}
 
+	@Test
+	@Order(7)
+	void testUpdatePersonName() {
+		// setup
+		long id = 1L;
+		String firstname = "Steve";
+		String lastname = "Jobs";
+		// execute
+		personRepository.updatePersonName(1L, firstname, lastname);
+		// verify
+		Person person = personRepository.findById(id);
+		assertEquals(firstname, person.getFirstname());
+		assertEquals(lastname, person.getLastname());
+	}
+
 }
