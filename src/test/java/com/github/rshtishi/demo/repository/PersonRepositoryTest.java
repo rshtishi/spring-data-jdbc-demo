@@ -42,7 +42,7 @@ class PersonRepositoryTest {
 		// verify
 		String expectedName = "Rando";
 		assertEquals(id, person.getId());
-		assertEquals(expectedName, person.getFirstName());
+		assertEquals(expectedName, person.getFirstname());
 	}
 
 	@Test
@@ -71,27 +71,26 @@ class PersonRepositoryTest {
 		assertEquals(expectedSize, persons.size());
 	}
 
-//	@Test
-//	@Order(5)
-//	void testFindByFirstName() {
-//		// setup
-//		String firstName = "Rando";
-//		// execute
-//		List<Person> persons = personRepository.findByFirstName(firstName);
-//		// verify
-//        System.out.println(persons.size());
-//		//assertEquals(firstName, person.get(0).getFirstName());
-//	}
-
 	@Test
 	@Order(5)
+	void testFindByFirstName() {
+		// setup
+		String firstName = "Rando";
+		// execute
+		List<Person> persons = personRepository.findByFirstname(firstName);
+		// verify
+		assertEquals(firstName, persons.get(0).getFirstname());
+	}
+
+	@Test
+	@Order(6)
 	void testFindByName() {
 		// setup
-		String name = "Torvalds";
+		String name = "Shtishi";
 		// execute
-		List<Person> person = personRepository.findByName(name);
+		List<Person> persons = personRepository.findByName(name);
 		// verify
-		assertEquals(name, person.get(0).getLastName());
+		assertEquals(name, persons.get(0).getLastname());
 	}
 
 }

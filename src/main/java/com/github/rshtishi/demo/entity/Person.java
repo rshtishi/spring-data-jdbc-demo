@@ -3,29 +3,32 @@ package com.github.rshtishi.demo.entity;
 import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 public class Person {
 	
 	@Id
 	private Long id;
-	private String firstName;
-	private String lastName;
+	@Column("FIRST_NAME")
+	private String firstname;
+	@Column("LAST_NAME")
+	private String lastname;
 	private LocalDate birthdate;
 	
 	public Person() {
 		super();
 	}
-	public Person(Long id, String firstName, String lastName, LocalDate birthdate) {
+	public Person(Long id, String firstname, String lastname, LocalDate birthdate) {
 		super();
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.birthdate = birthdate;
 	}
-	public Person(String firstName, String lastName, LocalDate birthdate) {
+	public Person(String firstname, String lastname, LocalDate birthdate) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.birthdate = birthdate;
 	}
 	public Long getId() {
@@ -34,17 +37,17 @@ public class Person {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 	public LocalDate getBirthdate() {
 		return birthdate;
