@@ -2,11 +2,17 @@ package com.github.rshtishi.demo.entity;
 
 import java.time.LocalDateTime;
 
-public class UserDetails {
+public class ProductDetails {
 	
 	private String createdBy;
 	private LocalDateTime createdOn;
 	
+	
+	public ProductDetails(String createdBy, LocalDateTime createdOn) {
+		super();
+		this.createdBy = createdBy;
+		this.createdOn = createdOn;
+	}
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -19,7 +25,4 @@ public class UserDetails {
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-	
-	
-
 }
