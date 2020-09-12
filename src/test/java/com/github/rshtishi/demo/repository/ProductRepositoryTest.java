@@ -3,7 +3,9 @@ package com.github.rshtishi.demo.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.github.rshtishi.demo.entity.Product;
 import com.github.rshtishi.demo.entity.ProductDetails;
+import com.github.rshtishi.demo.entity.Review;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -49,7 +52,10 @@ class ProductRepositoryTest {
 	@Order(3)
 	void testSave() {
 		// setup
-		Product product = new Product(null, "Lap Top", new ProductDetails("Rando", LocalDateTime.now()));
+		Set<Review> reviews = new HashSet<>();
+		reviews.add(new Review("Nice."));
+		reviews.add(new Review("It does job."));
+		Product product = new Product(null, "Lap Top", new ProductDetails("Rando", LocalDateTime.now()), reviews);
 		// execute
 		productRepository.save(product);
 		// verify

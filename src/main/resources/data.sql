@@ -6,3 +6,8 @@ values (1, 'Tablet');
 
 insert into product_details
 values (1, 'Rando', CURRENT_TIMESTAMP());
+
+insert into review
+values (1, 1, 'Awesome product.');
+insert into review
+values (2, 1, 'Great tablet.');

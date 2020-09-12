@@ -19,3 +19,10 @@ create table if not exists product_details
   created_on timestamp
 );
 
+create table if not exists review
+(
+	id integer primary key AUTO_INCREMENT,
+	product integer references product(id),
+	comment varchar(250)	
+);
+
