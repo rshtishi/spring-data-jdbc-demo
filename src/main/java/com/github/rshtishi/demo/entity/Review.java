@@ -4,7 +4,6 @@ public class Review {
 	
 	private String comment;
 	
-	
 	public Review(String comment) {
 		super();
 		this.comment = comment;

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.github.rshtishi.demo.entity.ManufacturerRef;
 import com.github.rshtishi.demo.entity.Product;
 import com.github.rshtishi.demo.entity.ProductDetails;
 import com.github.rshtishi.demo.entity.Review;
@@ -55,7 +56,11 @@ class ProductRepositoryTest {
 		Set<Review> reviews = new HashSet<>();
 		reviews.add(new Review("Nice."));
 		reviews.add(new Review("It does job."));
-		Product product = new Product(null, "Lap Top", new ProductDetails("Rando", LocalDateTime.now()), reviews);
+		Set<ManufacturerRef> manufacturers = new HashSet<>();
+		manufacturers.add(new ManufacturerRef(1L));
+		manufacturers.add(new ManufacturerRef(2L));
+		Product product = new Product(null, "Lap Top", new ProductDetails("Rando", LocalDateTime.now()), reviews,
+				manufacturers);
 		// execute
 		productRepository.save(product);
 		// verify
@@ -75,7 +80,7 @@ class ProductRepositoryTest {
 		int expectedSize = 1;
 		List<Product> products = productRepository.findAll();
 		assertEquals(expectedSize, products.size());
-		
+
 	}
 
 }

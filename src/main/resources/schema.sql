@@ -26,3 +26,17 @@ create table if not exists review
 	comment varchar(250)	
 );
 
+create table if not exists manufacturer 
+(
+	id integer primary key AUTO_INCREMENT,
+	name varchar(30),
+	location varchar(30)
+);
+
+create table if not exists product_manufacturer
+(
+	manufacturer integer,
+	product integer,
+	primary key( manufacturer,product)
+)
+
