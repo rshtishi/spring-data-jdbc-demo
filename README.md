@@ -12,8 +12,6 @@ a simple ORM tool for mapping entities to tables. Below are the topics that we a
 - creating a repository
 - adding derived queries
 - adding custom queries with ```@Query``` annotation
-- extending query capabilities with JOOQ 
-- extending query capabilities with QueryDSL
 - mapping association between entities
 - domain driven design
 
@@ -63,6 +61,9 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
 
 ### Adding Custom Queries with ```@Query``` Annotation
 
+We use the ```@Query``` annotation for defining queries that are not supported with query derivation. Also, it is reasonable to use custom queries with ```@Query``` annotation when the method name is too long when defined with query derivation. If the query modifies the database tables then we need to add the ```@Modifier``` annotation.
+The following example defines two customer queries using the ```@Query``` annotation:
+
 ```
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Long>{
@@ -70,13 +71,146 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
 	@Query("select * from person where first_name=:name or last_name=:name")
 	List<Person> findByName(@Param("name") String name);
 
+	@Modifying
+	@Query("UPDATE person SET first_name=:firstname, last_name=:lastname WHERE id=:id")
+	boolean updatePersonName(@Param("id") Long id, @Param("firstname") String firstname,
+			@Param("lastname") String lastname);
+
+}
+```
+
+### Mapping Associations between Entities
+
+In database design, we have three types of relationships between tables. They are :
+
+- **one to one** when a row from the parent table is associated with a single row of the child table
+- **one to many** when a row from the parent table is associated with multiple rows of the child table
+- **many to many** when  both tables are associated with multiple rows from each other
+
+#### One to One Mapped by Spring Data JDBC
+
+One to one relationship expressed between tables:
+
+```
+create table if not exists product
+(
+	id integer primary key AUTO_INCREMENT,
+	name varchar(30)
+);
+
+create table if not exists product_details
+(
+  product integer primary key references product(id),
+  created_by varchar(30),
+  created_on timestamp
+);
+```
+
+Mapping the one to one association between entities with Spring Data JDBC:
+
+```
+public class Product {
+
+	@Id
+	private Long id;
+	private String name;
+	private ProductDetails details;
+	
+	...
+}
+```
+
+```
+public class ProductDetails {
+	
+	private String createdBy;
+	private LocalDateTime createdOn;
+}
+```
+
+#### One to Many Mapped by Spring Data JDBC
+
+One to many relationship expressed between tables:
+
+```
+create table if not exists review
+(
+	id integer primary key AUTO_INCREMENT,
+	product integer references product(id),
+	comment varchar(250)	
+);
+```
+
+Mapping the one to many association between entities with Spring Data JDBC:
+
+```
+public class Product {
+
+	@Id
+	private Long id;
+	private String name;
+	private ProductDetails details;
+	private Set<Review> reviews;
+	
+	...
+}
+
+public class Review {
+	
+	private String comment;
+}
+```
+
+#### Many to Many Mapped by Spring Data JDBC
+
+Many to many relationship expressed between tables:
+
+```
+create table if not exists manufacturer 
+(
+	id integer primary key AUTO_INCREMENT,
+	name varchar(30),
+	location varchar(30)
+);
+
+create table if not exists product_manufacturer
+(
+	manufacturer integer,
+	product integer,
+	primary key( manufacturer,product)
+)
+```
+
+Mapping the many to many association between entities with Spring Data JDBC:
+
+```
+public class Product {
+
+	@Id
+	private Long id;
+	private String name;
+	private ProductDetails details;
+	private Set<Review> reviews;
+	private Set<ManufacturerRef> manufacturers = new HashSet<>();
+}
+
+public class Manufacturer {
+
+	@Id
+	private Long id;
+	private String name;
+	private String location;
+}
+
+@Table("PRODUCT_MANUFACTURER")
+public class ManufacturerRef {
+
+	Long manufacturer;
 }
 ```
 
 
-
-
-
+### Domain Driven Design
 
 
 
