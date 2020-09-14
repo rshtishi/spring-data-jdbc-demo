@@ -212,6 +212,48 @@ public class ManufacturerRef {
 
 ### Domain Driven Design
 
+Domain-Driven-Design is about dedicated time to understand the domain by collaborating with domain experts, analysts and produce a conceptual form that will be used
+as a model for building powerful, correct, and flexible software. When translating the model into code we should keep in mind to have software code to match the
+business domain. 
+
+**Entities** are the objects that have an identity that remains the same throughout the state of the software. For entities, the object is not the attributes which matter,
+but then a thread of continuity and identity that spans the life of the system and can broaden beyond it. Therefore, implementing entities in software means creating
+an identity. In our demo we have the following entities:
+
+- Person
+- Product
+- Manufacturer
+
+**Value Objects** are objects used for describing a certain aspect of the domain. We are not interested in the identity of the object but in the attributes it has.
+Having no identity the value objects can be easily created and discarded. It will be a good design approach to make the value objects immutable because it will 
+ensure data integrity if shared. In this demo the value objects are:
+
+- ProductDetails
+- Review
+- ManufacturerRef
+
+
+**Service** are objects that don't have an internal state and its purpose is to simply provide functionality for the domain. We should create services when important operation stands out as an important concept in the domain and it doesn't seem to belong naturally to any of the domain entities.
+
+**Modules** are used to organize related concepts into different units to reduce complexity. It increases the level of abstraction and decreases the complexity of the
+model. We can understand much easier the model by looking at modules. It’s a simple and efficient way to manage complexity.
+
+**Aggregates** are a group of associated objects that are considered as one unit with regard to data changes. The Aggregate marks a boundary that separates the objects
+from inside from those outsides. Eash Aggregate has a root. The root is an entity it is the only object accessible from the outside. In our demo, ```Product``` is an
+aggregate that has as root the ```Product``` entity. The object inside this the ```Product``` aggregate are ```ProductDetails``` and  ```Review```. The identity of ```ProductDetails``` and ```Review``` are local and make sense only inside the ```Product``` aggregate. The ```Product``` aggregate hold reference to ```Manufacturer``` aggregate.
+
+**Factories** are objects used to encapsulate the process of complex object creation. They are very useful when dealing with large and complex Aggregates because the client isn't required to have specific knowledge about the object build(internal structure of the object and the relationship between the object contained). In our demo, we are not using Factories object for creating aggregates because the construction is not complicated.
+
+**Repositories**  are objects used to encapsulate the logic needed to obtain object references. Repository acts as a storage place for globally accessible objects.
+In our demo we have the following repositories:
+
+- PersonRepository
+- ProductRepository
+
+
+
+
+
 
 
 
